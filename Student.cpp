@@ -13,7 +13,7 @@ Student::Student(const std::string& fname,const std::string& iname,const std::st
 
 Student::~Student()
 {
-
+     	delete this->strategy;
 }
 
 const std::string& Student::getFName()

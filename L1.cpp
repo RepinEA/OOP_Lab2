@@ -1,11 +1,9 @@
-﻿// L1.cpp: определяет точку входа для консольного приложения.
+// L1.cpp: определяет точку входа для консольного приложения.
 //
-
 #include "stdafx.h"
 #include <iostream>
 #include <clocale>
 #include "Student.h"
-#include "StudentsTypes.h"
 
 
 using namespace std;
@@ -16,34 +14,34 @@ int main()
 	
 	setlocale(LC_ALL, "Russian");
 	
-	Social* FirstStudent = new Social("Репин", "Иван", "Дмитриевич", 0);
-	Normal* Second= new Normal("Колесников", "Дмитрий", "Андреевич", 0);
-	Smart* Thrid= new Smart("Ветров", "Иван", "Михайлович", 0);
+	Student* FirstStudent = new Student("Репин", "Иван", "Дмитриевич", 0, social);
+	Student* Second= new Student("Колесников", "Дмитрий", "Андреевич", 0, normal);
+	Student* Thrid= new Student("Ветров", "Иван", "Михайлович", 0, smart);
 	
-	FirstStudent->state->Session(*FirstStudent);
+	FirstStudent->Session();
 	cout<<"Сдача экзамена студентом из студ.совета: "<< FirstStudent->getFName() <<" : "<<FirstStudent->getMark()<<endl;
-	FirstStudent->state->nextTry(*FirstStudent);
+	FirstStudent->nextTry();
 	cout<<"Его волшебная пересдача: "<< FirstStudent->getFName() <<" : " <<FirstStudent->getMark()<<endl;
 
 	cout<<endl;
 
-	Second->state->Session(*Second);
+	Second->Session();
 	cout<<"Сдача экзамена обычным рандомным студентом: "<< Second->getFName() <<" : "<<Second->getMark()<<endl;
-	Second->state->nextTry(*Second);
+	Second->nextTry();
 
 	cout<<"Его рандомная пересдача: "<< Second->getFName() <<" : "<<Second->getMark()<<endl;
 
 	cout<<endl;
 
-	Thrid->state->Session(*Thrid);
+	Thrid->Session();
 	cout<<"Сдача экзамена умным студентом: "<< Thrid->getFName() <<" : "<<Thrid->getMark()<<endl;
-	Thrid->state->nextTry(*Thrid);
+	Thrid->nextTry();
 	cout<<"Его пересдача: " << Thrid->getFName() << " : " << Thrid->getMark() << endl;
 
 	cout<<endl;
 
-	changeRole(*Second,smart);
-	Second->state->nextTry(*Second);
+	Second->changeRole(social);
+	Second->nextTry();
 	cout<<"Превращение обычного студента в умного и его пересдача: "<< Second->getFName() <<" : " << Second->getMark() << endl;
 
 

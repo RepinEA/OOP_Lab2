@@ -18,7 +18,7 @@ class Student
 
 public:
 	Student(const std::string& fname,const std::string& iname,const std::string& oname,int mark,studentsType stype);
-	virtual ~Student();
+	~Student();
 	const std::string& getFName();//получить имя
 	const std::string& getIName();//получить фамилию
 	const std::string& getOName();//получить отчество

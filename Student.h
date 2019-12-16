@@ -1,21 +1,23 @@
-﻿#pragma once
+#pragma once
 
-#include "StudentGroup.h"
 #include <vector>
 #include <string>
+#include "StudentGroup.h"
+#include "StudentsTypes.h"
 
 enum studentsType {normal,smart,social};
 
-class Group;
+class Strategy;
 class Social;
 class Normal;
 class Smart;
+class Group;
 
 class Student
 {
 
 public:
-	Student(const std::string& fname,const std::string& iname,const std::string& oname,int mark);
+	Student(const std::string& fname,const std::string& iname,const std::string& oname,int mark,studentsType stype);
 	virtual ~Student();
 	const std::string& getFName();//получить имя
 	const std::string& getIName();//получить фамилию
@@ -25,9 +27,10 @@ public:
 	const std::vector<Group*>& getGroups();//получить группы студента
 	int getMark();//получить успеваемость студента
 	void setMark(int Mark);//задать успеваемость студента
-	virtual void Session(Student& st)=0;//сдача экзамена студентом
-	virtual void nextTry(Student& st)=0;//пересдача экзамена студентом
-	Student *state;//через этот указатель вызывается поведение студента,которое зависит от его типа.
+	void changeRole(studentsType stype); //смена типа студента
+	void Session();//в этом методе будет вызываться метод из выбранной стратегии. 
+	void nextTry();//в этом тоже
+	Strategy *strategy;//выбранная стратегия. 
 
 private:
 	std::vector<Group*> groups;//группы студента

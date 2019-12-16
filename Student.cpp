@@ -1,12 +1,14 @@
-﻿#include "Student.h" 
+#include "Student.h" 
 
 
-Student::Student(const std::string& fname,const std::string& iname,const std::string& oname,int mark)
+Student::Student(const std::string& fname,const std::string& iname,const std::string& oname,int mark,studentsType stype)
 {
 	FName=fname;
 	IName=iname;
 	OName=oname;
 	this->mark=mark;
+	this->strategy=nullptr;
+	changeRole(stype);
 }
 
 Student::~Student()
@@ -79,5 +81,35 @@ std::ostream& operator<<(std::ostream& stream, Student& student)
 	stream << "-----------------------------------------------------------------------------------------------" << std::endl;
 
 	return stream;
+}
+
+void Student::changeRole(studentsType stype) //смена типа студента
+{
+	if(this->strategy!=nullptr) delete this->strategy;
+
+	if(stype==smart)
+	{
+		this->strategy=new Smart();
+	}
+
+	if(stype==social)
+	{
+		this->strategy=new Social();
+	}
+
+	if(stype==normal)
+	{
+		this->strategy=new Normal();
+	}
+}
+
+void Student::Session()
+{
+	this->setMark(this->strategy->Session());
+}
+
+void Student::nextTry()
+{
+	this->setMark(this->strategy->nextTry());
 }
 

@@ -30,7 +30,6 @@ public:
 	void changeRole(studentsType stype); //смена типа студента
 	void Session();//в этом методе будет вызываться метод из выбранной стратегии. 
 	void nextTry();//в этом тоже
-	Strategy *strategy;//выбранная стратегия. 
 
 private:
 	std::vector<Group*> groups;//группы студента
@@ -38,6 +37,7 @@ private:
 	std::string  IName;// фамилию студента
 	std::string  OName;// отчество студента
 	int mark;//успеваемость студента
+	Strategy *strategy;//выбранная стратегия. 
 };
 
 

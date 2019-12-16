@@ -1,99 +1,40 @@
-#pragma once
-
-#include "Student.h"
-#include <vector>
 #include <string>
 #include <iostream>
 
-//Class Normal
+//Class Strategy
 
-class Normal:public Student
+class Strategy
 {
 public:
-	Normal(const std::string& fname,const std::string& iname,const std::string& oname,int mark):Student(fname,iname,oname,mark)
-	{
-		this->state=this;
-	};
-	~Normal(){};
-	void Session(Student& st) override;
-	void nextTry(Student& st) override;
-
+	virtual int Session()=0;//сдача экзамена студентом
+	virtual int nextTry()=0;//пересдача экзамена студентом
 };
 
-void Normal::Session(Student& st)
-{
-	st.setMark(  2 + rand()%(5- 2+1)   );
-}
+//Class Normal
 
-void Normal::nextTry(Student& st)
+class Normal:public Strategy
 {
-	st.setMark( 2 + rand()%(5- 2+1) );
-}
+public:
+	int Session() override;
+	int nextTry() override;
+};
+
 
 //Class Social
 
-class Social:public Normal 
+class Social:public Strategy 
 {
 public:
-	Social(const std::string& fname,const std::string& iname,const std::string& oname,int mark):Normal(fname,iname,oname,mark)
-	{
-		this->state=this;
-	};
-	~Social(){};
-	void nextTry(Student& st) override;
+	int Session() override;
+	int nextTry() override;
 };
 
-void Social::nextTry(Student& st)
-{
-	st.setMark(  3 + rand()%(4- 3+1)   );
-}
 
 //Class Smart
 
-class Smart:public Student
+class Smart:public Strategy
 {
 public:
-	Smart(const std::string& fname,const std::string& iname,const std::string& oname,int mark):Student(fname,iname,oname,mark)
-	{
-		this->state=this;
-	};
-	~Smart(){};
-	void Session(Student& st) override;
-	void nextTry(Student& st) override;
+	int Session() override;
+	int nextTry() override;
 };
-
-void Smart::Session(Student& st)
-{
-	st.setMark( 4 + rand()%(5- 4+1)  );
-}
-
-void Smart::nextTry(Student& st)
-{
-	st.setMark(5);
-}
-
-
-void changeRole(Student& st,studentsType stype) //����� ���� ��������
-{
-
-	if(stype==smart)
-	{
-		if (&st!=st.state) delete st.state; 
-		st.state=new Smart(st.getFName(),st.getIName(),st.getOName(),st.getMark());
-		return;
-	}
-
-	if(stype==social)
-	{
-		if (&st!=st.state) delete st.state; 
-		st.state=new Social(st.getFName(),st.getIName(),st.getOName(),st.getMark());
-		return;
-	}
-
-	if(stype==normal)
-	{
-		if (&st!=st.state) delete st.state; 
-		st.state=new Normal(st.getFName(),st.getIName(),st.getOName(),st.getMark());
-		return;
-	}
-}
